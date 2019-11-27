@@ -1,0 +1,7 @@
+apiVersion: tan.github.com/v1alpha1
+kind: Tgik
+metadata:
+  name: example-tgik
+spec:
+  # Add fields here
+  size: 3

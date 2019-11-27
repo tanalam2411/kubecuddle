@@ -82,7 +82,7 @@ INFO[0049] Project validation successful.
 INFO[0049] Project creation complete.   
 
 
-~/tanveer/k8s/kubecuddle$ tree
+~/tanveer/k8s/kubecuddle$ tree -I vendor
 .
 ├── LICENSE
 ├── README.md
@@ -112,5 +112,108 @@ INFO[0049] Project creation complete.
         └── version.go
 
 10 directories, 16 files
+
        
 ```
+
+2. Add a new API for the custom resource `Tgik`
+```bash
+~/tanveer/k8s/kubecuddle$ cd tgik-operator/
+~/tanveer/k8s/kubecuddle/tgik-operator$ operator-sdk add api --api-version=tan.github.com/v1alpha1 --kind=Tgik
+INFO[0000] Generating api version tan.github.com/v1alpha1 for kind Tgik. 
+INFO[0000] Created pkg/apis/tan/group.go                
+INFO[0001] Created pkg/apis/tan/v1alpha1/tgik_types.go  
+INFO[0001] Created pkg/apis/addtoscheme_tan_v1alpha1.go 
+INFO[0001] Created pkg/apis/tan/v1alpha1/register.go    
+INFO[0001] Created pkg/apis/tan/v1alpha1/doc.go         
+INFO[0001] Created deploy/crds/tan.github.com_v1alpha1_tgik_cr.yaml 
+INFO[0004] Created deploy/crds/tan.github.com_tgiks_crd.yaml 
+INFO[0004] Running deepcopy code-generation for Custom Resource group versions: [tan:[v1alpha1], ] 
+INFO[0012] Code-generation complete.                    
+INFO[0012] Running OpenAPI code-generation for Custom Resource group versions: [tan:[v1alpha1], ] 
+INFO[0020] Created deploy/crds/tan.github.com_tgiks_crd.yaml 
+INFO[0020] Code-generation complete.                    
+INFO[0020] API generation complete.   
+
+~/tanveer/k8s/kubecuddle$ tree -I vendor
+.
+├── LICENSE
+├── README.md
+└── tgik-operator
+    ├── build
+    │   ├── bin
+    │   │   ├── entrypoint
+    │   │   └── user_setup
+    │   └── Dockerfile
+    ├── cmd
+    │   └── manager
+    │       └── main.go
+    ├── deploy
+    │   ├── crds
+    │   │   ├── tan.github.com_tgiks_crd.yaml
+    │   │   └── tan.github.com_v1alpha1_tgik_cr.yaml
+    │   ├── operator.yaml
+    │   ├── role_binding.yaml
+    │   ├── role.yaml
+    │   └── service_account.yaml
+    ├── go.mod
+    ├── go.sum
+    ├── pkg
+    │   ├── apis
+    │   │   ├── addtoscheme_tan_v1alpha1.go
+    │   │   ├── apis.go
+    │   │   └── tan
+    │   │       ├── group.go
+    │   │       └── v1alpha1
+    │   │           ├── doc.go
+    │   │           ├── register.go
+    │   │           ├── tgik_types.go
+    │   │           ├── zz_generated.deepcopy.go
+    │   │           └── zz_generated.openapi.go
+    │   └── controller
+    │       └── controller.go
+    ├── tools.go
+    └── version
+        └── version.go
+
+13 directories, 25 files
+                 
+```
+
+Created following new files:
+```bash
+    ├── deploy
+    │   ├── crds
+    │   │   ├── tan.github.com_tgiks_crd.yaml
+    │   │   └── tan.github.com_v1alpha1_tgik_cr.yaml
+	
+    ├── pkg
+    │   ├── apis
+    │   │   ├── addtoscheme_tan_v1alpha1.go
+
+    │   │   └── tan
+    │   │       ├── group.go
+    │   │       └── v1alpha1
+    │   │           ├── doc.go
+    │   │           ├── register.go
+    │   │           ├── tgik_types.go
+    │   │           ├── zz_generated.deepcopy.go
+    │   │           └── zz_generated.openapi.go
+```
+
+And updated :
+```bash
+
+    ├── deploy
+    │   ├── role.yaml
+```
+Content added:
+```yaml
+- apiGroups:
+  - tan.github.com
+  resources:
+  - '*'
+  verbs:
+  - '*'
+```
+
