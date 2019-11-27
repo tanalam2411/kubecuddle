@@ -1,0 +1,11 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: tgik-operator
+subjects:
+- kind: ServiceAccount
+  name: tgik-operator
+roleRef:
+  kind: Role
+  name: tgik-operator
+  apiGroup: rbac.authorization.k8s.io
