@@ -16,7 +16,7 @@ spec:
       containers:
         - name: tgik-operator
           # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: on2411/tgik-operator:latest
           command:
           - tgik-operator
           imagePullPolicy: Always
